@@ -1,11 +1,3 @@
-/*onclick = "this.style.display='none'"
-
-$(function () {
-  $("div").click(function () {
-    $(this).remove();
-  });
-});*/
-
 let canvas = document.getElementById("canvas");
 let context = canvas.getContext("2d");
 
@@ -13,9 +5,11 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 
-const NUM_POINTS = 20;//20 + Math.random();
+const NUM_POINTS = 20;
 const points = [];
+const satkacikner = [];
 let ants = document.getElementsByClassName("points");
+
 
 for (let i = 0; i < NUM_POINTS; i++) {
 
@@ -34,6 +28,15 @@ for (let i = 0; i < NUM_POINTS; i++) {
 
     });
 
+    let item = {
+       
+        x: Math.random() * (canvas.width - 2 * size),
+
+    };
+    item.xDelta = item.width / 20;
+
+    points.push(item);
+
 }
 
 var leftimg = new Image();
@@ -42,17 +45,15 @@ leftimg.src = "./ant.png";
 var rightimg = new Image();
 rightimg.src= "./ant2.png";
 
+        
 var img = new Image();
 img.src= "./yellow.png"
 
 const draw = function () {
-    context.clearRect(0, 0, canvas.width, canvas.height);
+    //context.clearRect(0, 0, canvas.width, canvas.height);
     points.forEach(function (l) {
     	
-
-    	if(l.isDead) { context.drawImage(img, l.x, l.y, l.width, l.height);
-
-    	} else if(l.xDelta > 0) {
+    	if(l.xDelta > 0) {
         	context.drawImage(rightimg, l.x, l.y, l.width, l.height);
     	} else  {
     		context.drawImage(leftimg, l.x, l.y, l.width, l.height);
@@ -72,31 +73,47 @@ const draw = function () {
 
     });
     
+}
+const drawsatkacikner = function(){
+
+	context.clearRect(0, 0, canvas.width, canvas.height);
+    satkacikner.forEach(function (a) {
+			context.drawImage(img, a.x, a.y, a.width, a.height);
+    });
+}
+
+$("#canvas").on('mousedown', function(e){
+
+	const getMouseCo = function(){
+
+
+		points.forEach(function(p, idx){
+			if (e.clientX > p.x && e.clientX < p.x + p.width && e.clientY > p.y && e.clientY < p.height+p.y){
+				p.isDead = true;
+				p.xDelta = 0;
+				p.yDelta = 0;
+				satkacikner.push(p);
+				points.splice(idx, 1);
+			}
+		
+		})
 	}
+
+	getMouseCo();
+});
+
+
 let animate = function () {
+	
+	drawsatkacikner();
+
     draw();
-    requestAnimationFrame(animate);
+        requestAnimationFrame(animate);
 }
 
 animate();
 
 
-$("#canvas").on('mousedown', function(e){
 
-	const getMouseCo =function(){
-
-
-	points.forEach(function(p){
-		if (e.clientX > p.x && e.clientX < p.x + p.width && e.clientY > p.y && e.clientY < p.height+p.y){
-			p.isDead = true;
-			p.xDelta = 0;
-			p.yDelta = 0;
-		}
-	})
-}
-
-
-	getMouseCo();
-});
 
 
