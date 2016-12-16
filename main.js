@@ -2,8 +2,6 @@
 let canvas = document.getElementById("canvas");
 let context = canvas.getContext("2d");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
 
 const NUM_POINTS = 20;
 const points = [];
@@ -11,11 +9,21 @@ const satkacikner = [];
 let score = 0;
 let ants = document.getElementsByClassName("points");
 
+function Backimgmosq(){
+    $("#canvas").css("background-image","url(./images/skybackground.jpg)");
+}
+function Backimg(){
+    $("#canvas").css("background-image","url(./images/grassantbck.jpg)","background-repeat: no-repeat");
+}
+function Backimgcock(){
+    $("#canvas").css("background-image","url(./images/cockroachbck.jpg)");
+}
+
 for (let i = 0; i < NUM_POINTS; i++) {
 
-    const size = 50+Math.random() * 100;
-    points.push({
-       
+    const size = 50+Math.random() * 50;
+    
+       let item={
         x: Math.random() * (canvas.width - 2 * size),
         y: Math.random() * (canvas.height - 2 * size),
 
@@ -25,15 +33,10 @@ for (let i = 0; i < NUM_POINTS; i++) {
         xDelta: 1, // the change that you will add to x, you can flip it when you get to the edge
         yDelta: 0, // the change that you will add to y, you can flip it when you get to the edge
 
-        isDead: false
-
-    });
-
-    let item = {
+        isDead: false,
        
-        x: Math.random() * (canvas.width - 2 * size),
+               }
 
-    };
     item.xDelta = item.width / 20;
 
     points.push(item);
@@ -41,13 +44,16 @@ for (let i = 0; i < NUM_POINTS; i++) {
 }
 
 let leftimg = new Image();
-leftimg.src = "./ant.png";
+leftimg.src = "./images/ant.png";
 
 let rightimg = new Image();
-rightimg.src= "./ant2.png";
+rightimg.src= "./images/ant2.png";
        
 let img = new Image();
-img.src= "./yellow.png"
+img.src= "./images/yellow.png"
+
+//let background = new Image();
+//background.src = "./images/grassantbck.jpg";
 
 const draw = function () {
     //context.clearRect(0, 0, canvas.width, canvas.height);
@@ -112,43 +118,52 @@ $("#canvas").on('mousedown', function(e){
 });
 
 function drawScore() {
-    context.font = "16px Arial";
-    context.fillStyle = "#0095DD";
+    context.font = "20px Times-bold";
+    context.fillStyle = "#000000";
     context.fillText("Score: "+score, 100, 20);
 }
 
 $('#mosq').on('click', function(){
 
-    leftimg.src = "./mosquito.png";
-    rightimg.src = "./mosquito2.png";
+    leftimg.src = "./images/mosquito.png";
+    rightimg.src = "./images/mosquito2.png";
+    Backimgmosq();
 
 
 })
 
 $('#ant').on('click', function(){
 
-    leftimg.src = "./ant.png";
-    rightimg.src = "./ant2.png";
+    leftimg.src = "./images/ant.png";
+    rightimg.src = "./images/ant2.png";
+    Backimg();
 
 })
 
 $('#roach').on('click', function(){
 
-    leftimg.src = "./roach1.png";
-    rightimg.src = "./roach.png";
+    leftimg.src = "./images/cockroach.png";
+    rightimg.src = "./images/cockroach2.png";
+    Backimgcock();
 
 })
 
+ 
 
 let animate = function(){
     
     drawsatkacikner();
     draw();
-        requestAnimationFrame(animate);
+    requestAnimationFrame(animate);
+    
 }
 
-animate();
+$('#strtg').on('click', function (){
+    animate();
+    Backimg();
+});
 
+let counter = setInterval(UpdateTime, 500);
 let sTime = new Date().getTime();
 let countDown =30;
 
@@ -167,5 +182,4 @@ function UpdateTime() {
     }
 }
 UpdateTime();
-let counter = setInterval(UpdateTime, 500);
 

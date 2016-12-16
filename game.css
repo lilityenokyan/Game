@@ -1,0 +1,8 @@
+body {
+	background-color: #FFFFCC;
+}
+
+#canvas{
+	
+	background:url(./images/panda.png) center center no-repeat;
+}

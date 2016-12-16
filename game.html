@@ -2,6 +2,7 @@
 
 <html>
 <head>
+    <link rel="stylesheet" type="text/css" href="game.css">
     <style>
       body {
             background-size:99%;
@@ -11,20 +12,29 @@
           color:red
       }
 
-      #canvas {
-         background-color: white ;
-      }
+      
     </style>
   
     <title> Ant Game </title>
 </head>
 <body>
-    <input type="image" name="image" src="./ant.png" width="100" id = "ant">
-    <input type="image" name="image" src="./mosquito.png" width="100" id = "mosq">
-    <input type="image" name="image" src="./roach1.png" width="100" id = "roach">
-    <canvas id="canvas">
- 
-    </canvas>
+
+  
+    <canvas id="canvas" width="1200" height="500" style="border:1px solid #000000;"></canvas>
+    <div id="countdown">
+        <div id="minutes" style="float:left">00</div>
+        <div style="float:left">:</div>
+        <div id="seconds" style="float:left">00</div>
+    </div>
+
+
+    <div id="clockdiv">
+    <button id = "strtg"> NEW GAME </button>
+    <p id = "parag"> Choose one </p>
+    <input type="image" name="image" src="./images/ant.png" width="100" id = "ant">
+    <input type="image" name="image" src="./images/mosquito.png" width="100" id = "mosq">
+    <input type="image" name="image" src="./images/cockroach.png" width="100" id = "roach">
+   
 
     <script type="text/javascript" src="jquery.js"> </script>   
     <script src="main.js">  </script>
