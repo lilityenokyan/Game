@@ -2,7 +2,6 @@
 let canvas = document.getElementById("canvas");
 let context = canvas.getContext("2d");
 
-
 const NUM_POINTS = 20;
 const points = [];
 const satkacikner = [];
@@ -19,28 +18,32 @@ function Backimgcock(){
     $("#canvas").css("background-image","url(./images/cockroachbck.jpg)");
 }
 
-for (let i = 0; i < NUM_POINTS; i++) {
 
-    const size = 50+Math.random() * 50;
-    
-       let item={
-        x: Math.random() * (canvas.width - 2 * size),
-        y: Math.random() * (canvas.height - 2 * size),
+constructAnts();
+function constructAnts(){
+    for (let i = 0; i < NUM_POINTS; i++) {
 
-        height: size,
-        width:  2*size,
+        const size = 50+Math.random() * 50;
+        
+           let item={
+            x: Math.random() * (canvas.width - 2 * size),
+            y: Math.random() * (canvas.height - 2 * size),
 
-        xDelta: 1, // the change that you will add to x, you can flip it when you get to the edge
-        yDelta: 0, // the change that you will add to y, you can flip it when you get to the edge
+            height: size,
+            width:  2*size,
 
-        isDead: false,
-       
-               }
+            xDelta: 1, // the change that you will add to x, you can flip it when you get to the edge
+            yDelta: 0, // the change that you will add to y, you can flip it when you get to the edge
 
-    item.xDelta = item.width / 20;
+            isDead: false,
+           
+                   }
 
-    points.push(item);
+        item.xDelta = item.width / 20;
 
+        points.push(item);
+
+    }
 }
 
 let leftimg = new Image();
@@ -94,7 +97,6 @@ $("#canvas").on('mousedown', function(e){
 
     const getMouseCo = function(){
 
-
         points.forEach(function(p, idx){
             var sound = new Audio('./split2.wav');
             if (e.clientX > p.x && e.clientX < p.x + p.width && e.clientY > p.y && e.clientY < p.height+p.y){
@@ -106,9 +108,24 @@ $("#canvas").on('mousedown', function(e){
                 sound.play();
                 score++;
                 if(score >= NUM_POINTS) {
-                        alert("YOU WIN, CONGRATS!");
-                        document.location.reload();
-
+                    if(current_lvl<3){
+                            //levelchange = true;
+                            swal(
+                            'Good job!',
+                            'Next level!',
+                            'warning'
+                             )
+                              current_lvl++; 
+                              next_lvl();
+                        }
+                        else {
+                          swal("Congratulations!",
+                            "You win!",
+                             "success"
+                             );
+                             document.location.reload();
+                          //stopgame();
+                        }
                 }
         
             }
@@ -117,10 +134,23 @@ $("#canvas").on('mousedown', function(e){
     getMouseCo();
 });
 
+function next_lvl(){
+
+    clearInterval(animation);
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    countDown-=5;
+    score=0;
+    constructAnts(); // Fill the array with the points for the ants
+    satkacikner=[];
+    var animation = setInterval(animate,1);     
+
+}
+
 function drawScore() {
     context.font = "20px Times-bold";
     context.fillStyle = "#000000";
     context.fillText("Score: "+score, 100, 20);
+    context.fillText("Level: "+current_lvl, 100, 40);
 }
 
 $('#mosq').on('click', function(){
@@ -166,8 +196,10 @@ $('#strtg').on('click', function (){
 let counter = setInterval(UpdateTime, 500);
 let sTime = new Date().getTime();
 let countDown =30;
+let animation = setInterval(animate,1);
 
 function UpdateTime() {
+
     let cTime = new Date().getTime();
     let diff = cTime - sTime;
     let seconds = countDown - Math.floor(diff / 1000);
@@ -181,5 +213,31 @@ function UpdateTime() {
         clearInterval(counter);
     }
 }
+
+function gameOver(){
+
+  satkacikner=[];
+  points=[];
+  context.clearRect(0, 0, canvas.width, canvas.height);
+  requestAnimationFrame(gameOver);
+  //context.drawImage(gameOverImage, 350, 100);
+  context.drawImage(gameOverImage, 350,100);
+
+}
+
+
+
 UpdateTime();
+
+function BackgroundSound(){
+
+   /* $('#on').on('click', function (){
+
+        $(Audio).stop();
+
+        
+    });*/
+    document.getElementById('audio').muted = true;
+
+}
 

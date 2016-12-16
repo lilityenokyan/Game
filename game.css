@@ -1,7 +1,18 @@
 body {
 	background-color: #FFFFCC;
+	background-size:99%;
+    background-repeat: no-repeat;
 }
 
+title {
+      color:red
+}
+
+#parag{
+	color: red;
+	font-weight: bold;
+	font-size: 20px;
+}
 #canvas{
 	
 	background:url(./images/panda.png) center center no-repeat;

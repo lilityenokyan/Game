@@ -2,19 +2,7 @@
 
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="game.css">
-    <style>
-      body {
-            background-size:99%;
-            background-repeat: no-repeat;
-        }
-      title {
-          color:red
-      }
-
-      
-    </style>
-  
+    <link rel="stylesheet" type="text/css" href="game.css"> 
     <title> Ant Game </title>
 </head>
 <body>
@@ -30,10 +18,16 @@
 
     <div id="clockdiv">
     <button id = "strtg"> NEW GAME </button>
-    <p id = "parag"> Choose one </p>
+    <p id = "parag"> CLICK on the pictures to choose the characters </p>
     <input type="image" name="image" src="./images/ant.png" width="100" id = "ant">
     <input type="image" name="image" src="./images/mosquito.png" width="100" id = "mosq">
     <input type="image" name="image" src="./images/cockroach.png" width="100" id = "roach">
+    <input type="image" name="image" src="./images/on.png" width="30" id = "on">
+
+
+    <audio autoplay loop id ="audio">
+      <source src="music.mp3">
+    </audio>
    
 
     <script type="text/javascript" src="jquery.js"> </script>   
