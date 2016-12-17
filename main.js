@@ -1,9 +1,10 @@
+
+
 let canvas = document.getElementById("canvas");
 let context = canvas.getContext("2d");
 
-
 let ants = document.getElementsByClassName("points");
-let NUM_POINTS = 2;
+let NUM_POINTS = 25;
 let points = [];
 let satkacikner = [];
 let countDown = 30;
@@ -23,7 +24,6 @@ img.src = "./images/yellow.png"
 
 let gameOverImage = new Image();
 gameOverImage.src = "./images/gameover.png";
-
 
 init();
 
@@ -46,7 +46,6 @@ function Backimg() {
 function Backimgcock() {
     $("#canvas").css("background-image", "url(./images/cockroachbck.jpg)");
 }
-
 
 function constructAnts() {
     points = [];
@@ -77,7 +76,7 @@ function constructAnts() {
 
 
 const draw = function () {
-    //context.clearRect(0, 0, canvas.width, canvas.height);
+
     points.forEach(function (l) {
 
         if (l.xDelta > 0) {
@@ -97,27 +96,28 @@ const draw = function () {
         }
 
     });
+
     drawScore();
 
 };
+
 const drawsatkacikner = function () {
 
     context.clearRect(0, 0, canvas.width, canvas.height);
     satkacikner.forEach(function (a) {
-        context.drawImage(img, a.x, a.y, a.width, a.height);
+    context.drawImage(img, a.x, a.y, a.width, a.height);
+
     });
 };
-
-
 
 $("#canvas").on('mousedown', function (e) {
 
     const getMouseCo = function () {
 
-
         points.forEach(function (p, idx) {
-            var sound = new Audio('./split2.wav');
+            let sound = new Audio('./split2.wav');
             if (e.clientX > p.x && e.clientX < p.x + p.width && e.clientY > p.y && e.clientY < p.height + p.y) {
+               
                 p.isDead = true;
                 p.xDelta = 0;
                 p.yDelta = 0;
@@ -125,9 +125,11 @@ $("#canvas").on('mousedown', function (e) {
                 points.splice(idx, 1);
                 sound.play();
                 score++;
+               
                 if (score >= NUM_POINTS) {
+               
                     if (current_lvl < 3) {
-                        //levelchange = true;
+
                         swal({
                             title: 'Level up!',
                             text: 'You are doing great',
@@ -136,7 +138,6 @@ $("#canvas").on('mousedown', function (e) {
                         }).then(
                             function () {
                             },
-                            // handling the promise rejection
                             function (dismiss) {
                                 if (dismiss === 'timer') {
                                     console.log('I was closed by the timer')
@@ -146,17 +147,15 @@ $("#canvas").on('mousedown', function (e) {
                         current_lvl++;
                         next_lvl();
 
-                    }
-                    else {
+                    } else {
                         swal({
                             title: "Congratulations!",
                             text: "You win!",
                             type: "success",
-                            timer: 500
+                            timer: 1000
                         }).then(
                             function () {
                             },
-                            // handling the promise rejection
                             function (dismiss) {
                                 if (dismiss === 'timer') {
                                     console.log('I was closed by the timer')
@@ -164,14 +163,10 @@ $("#canvas").on('mousedown', function (e) {
                             }
                         )
 
-                        setInterval(document.location.reload(), 100);
-
-
+                        setInterval(document.location.reload(), 100)
                     }
-
                 }
             }
-
         })
     }
     getMouseCo();
@@ -219,17 +214,13 @@ $('#ant').on('click', ant);
 $('#roach').on('click', roach);
 
 
-function animate () {
+function animate() {
     drawsatkacikner();
     draw();
-
     requestId = requestAnimationFrame(animate);
 }
 
-
 let sTime = new Date().getTime();
-
-//let animation = setInterval(animate,1);
 
 function startTimer(duration, display) {
     let timer = duration, minutes, seconds;
@@ -246,22 +237,17 @@ function startTimer(duration, display) {
             timer = duration;
             gameOver();
             $("#countdown").hide();
-
         }
 
     }, 1000);
 }
-
-
 
 function gameOver() {
     satkacikner = [];
     points = [];
     context.clearRect(0, 0, canvas.width, canvas.height);
     requestAnimationFrame(gameOver);
-    //context.drawImage(gameOverImage, 350, 100);
     context.drawImage(gameOverImage, 350, 100);
-
 }
 
 function init() {
@@ -270,5 +256,4 @@ function init() {
         requestId = undefined;
     }
     constructAnts();// init items for draw
-
 }
