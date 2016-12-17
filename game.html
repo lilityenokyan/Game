@@ -2,36 +2,31 @@
 
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="game.css"> 
+    <link rel="stylesheet" type="text/css" href="game.css">
     <title> Ant Game </title>
 </head>
 <body>
 
-  
+
     <canvas id="canvas" width="1200" height="500" style="border:1px solid #000000;"></canvas>
-    <div id="countdown">
-        <div id="minutes" style="float:left">00</div>
-        <div style="float:left">:</div>
-        <div id="seconds" style="float:left">00</div>
-    </div>
+    <div id="countdown"></div>
 
 
     <div id="clockdiv">
-    <button id = "strtg"> NEW GAME </button>
-    <p id = "parag"> CLICK on the pictures to choose the characters </p>
-    <input type="image" name="image" src="./images/ant.png" width="100" id = "ant">
-    <input type="image" name="image" src="./images/mosquito.png" width="100" id = "mosq">
-    <input type="image" name="image" src="./images/cockroach.png" width="100" id = "roach">
-    <input type="image" name="image" src="./images/on.png" width="30" id = "on">
+    <button id="strtg"> NEW GAME</button>
+    <p id="parag"> CLICK on the pictures to choose the characters </p>
+    <input type="image" name="image" src="./images/ant.png" width="100" id="ant">
+    <input type="image" name="image" src="./images/mosquito.png" width="100" id="mosq">
+    <input type="image" name="image" src="./images/cockroach.png" width="100" id="roach">
 
 
-    <audio autoplay loop id ="audio">
-      <source src="music.mp3">
+    <audio autoplay loop id="audio">
+        <source src="music.mp3">
     </audio>
-   
 
-    <script type="text/javascript" src="jquery.js"> </script>   
-    <script src="main.js">  </script>
+
+    <script type="text/javascript" src="jquery.js"></script>
+    <script src="main.js"></script>
     <script src="./es6-promise/dist/es6-promise.auto.min.js"></script> <!-- for IE support -->
     <script src="./sweetalert2/dist/sweetalert2.min.js"></script>
     <link rel="stylesheet" type="text/css" href="./sweetalert2/dist/sweetalert2.min.css">
