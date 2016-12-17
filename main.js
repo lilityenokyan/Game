@@ -1,12 +1,13 @@
-
 let canvas = document.getElementById("canvas");
 let context = canvas.getContext("2d");
 
-const NUM_POINTS = 20;
-const points = [];
-const satkacikner = [];
-let score = 0;
+
 let ants = document.getElementsByClassName("points");
+const NUM_POINTS = 5;
+let points = [];
+let satkacikner = [];
+let countDown = 30;
+let current_lvl = 1;
 
 function Backimgmosq(){
     $("#canvas").css("background-image","url(./images/skybackground.jpg)");
@@ -19,55 +20,57 @@ function Backimgcock(){
 }
 
 
-constructAnts();
-function constructAnts(){
-    for (let i = 0; i < NUM_POINTS; i++) {
+//constructAnts();
+function constructAnts()
+{
+    console.log('sdfsdf')
+for (let i = 0; i < NUM_POINTS; i++) {
 
-        const size = 50+Math.random() * 50;
-        
-           let item={
-            x: Math.random() * (canvas.width - 2 * size),
-            y: Math.random() * (canvas.height - 2 * size),
+    const size = 50+Math.random() * 50;
+    
+       let item={
+        x: Math.random() * (canvas.width - 2 * size),
+        y: Math.random() * (canvas.height - 2 * size),
 
-            height: size,
-            width:  2*size,
+        height: size,
+        width:  2*size,
 
-            xDelta: 1, // the change that you will add to x, you can flip it when you get to the edge
-            yDelta: 0, // the change that you will add to y, you can flip it when you get to the edge
+        xDelta: 1, // the change that you will add to x, you can flip it when you get to the edge
+        yDelta: 0, // the change that you will add to y, you can flip it when you get to the edge
 
-            isDead: false,
-           
-                   }
+        isDead: false,
+       
+               }
 
-        item.xDelta = item.width / 20;
+    item.xDelta = item.width / 100;
 
-        points.push(item);
+    points.push(item);
 
-    }
+}
 }
 
-let leftimg = new Image();
+var leftimg = new Image();
 leftimg.src = "./images/ant.png";
 
-let rightimg = new Image();
+var rightimg = new Image();
 rightimg.src= "./images/ant2.png";
-       
-let img = new Image();
+
+var img = new Image();
 img.src= "./images/yellow.png"
 
-//let background = new Image();
-//background.src = "./images/grassantbck.jpg";
+var gameOverImage = new Image();
+gameOverImage.src = "./images/gameover.png";
+
 
 const draw = function () {
     //context.clearRect(0, 0, canvas.width, canvas.height);
     points.forEach(function (l) {
-        
+
         if(l.xDelta > 0) {
             context.drawImage(rightimg, l.x, l.y, l.width, l.height);
         } else  {
             context.drawImage(leftimg, l.x, l.y, l.width, l.height);
         }
-        
 
         l.x += l.xDelta;
         l.y += l.yDelta;
@@ -75,27 +78,29 @@ const draw = function () {
         if (l.x + l.width >= canvas.width-10 || l.x <= 0) {
             l.xDelta *= -1;
         }
-
         if (l.y + l.height >= canvas.height-10 || l.y <= 0) {
             l.yDelta *= -1;
         }
 
     });
-
     drawScore();
-    
+
 }
 const drawsatkacikner = function(){
 
     context.clearRect(0, 0, canvas.width, canvas.height);
     satkacikner.forEach(function (a) {
-        context.drawImage(img, a.x, a.y, a.width, a.height);
+            context.drawImage(img, a.x, a.y, a.width, a.height);
     });
 }
+
+var score = 0;
+
 
 $("#canvas").on('mousedown', function(e){
 
     const getMouseCo = function(){
+
 
         points.forEach(function(p, idx){
             var sound = new Audio('./split2.wav');
@@ -107,18 +112,33 @@ $("#canvas").on('mousedown', function(e){
                 points.splice(idx, 1);
                 sound.play();
                 score++;
-                if(score >= NUM_POINTS) {
-                    if(current_lvl<3){
+                if(score >= NUM_POINTS)
+                 {
+                   if(current_lvl<3)
+                        {
                             //levelchange = true;
-                            swal(
-                            'Good job!',
-                            'Next level!',
-                            'warning'
-                             )
+                            swal({
+                            title: 'Level up!',
+                            text: 'You are doing great',
+                            timer: 500
+                            }).then(
+                            function () {},
+                            // handling the promise rejection
+                            function (dismiss) {
+                            if (dismiss === 'timer') {
+                            console.log('I was closed by the timer')
+                                 }
+                                }
+                               )
                               current_lvl++; 
                               next_lvl();
+                                    
+
+
+
                         }
                         else {
+
                           swal("Congratulations!",
                             "You win!",
                              "success"
@@ -126,15 +146,17 @@ $("#canvas").on('mousedown', function(e){
                              document.location.reload();
                           //stopgame();
                         }
+
                 }
-        
             }
+
         })
     }
     getMouseCo();
 });
 
-function next_lvl(){
+function next_lvl()
+{
 
     clearInterval(animation);
     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -142,10 +164,11 @@ function next_lvl(){
     score=0;
     constructAnts(); // Fill the array with the points for the ants
     satkacikner=[];
-    var animation = setInterval(animate,1);     
+    var animation = setInterval(animate,1);
+           
+     
 
 }
-
 function drawScore() {
     context.font = "20px Times-bold";
     context.fillStyle = "#000000";
@@ -153,12 +176,12 @@ function drawScore() {
     context.fillText("Level: "+current_lvl, 100, 40);
 }
 
+
 $('#mosq').on('click', function(){
 
     leftimg.src = "./images/mosquito.png";
     rightimg.src = "./images/mosquito2.png";
-    Backimgmosq();
-
+    Backimgmosq(); 
 
 })
 
@@ -166,40 +189,37 @@ $('#ant').on('click', function(){
 
     leftimg.src = "./images/ant.png";
     rightimg.src = "./images/ant2.png";
-    Backimg();
-
+    Backimg(); 
 })
 
 $('#roach').on('click', function(){
 
     leftimg.src = "./images/cockroach.png";
     rightimg.src = "./images/cockroach2.png";
-    Backimgcock();
-
+    Backimgcock(); 
 })
 
- 
 
-let animate = function(){
-    
+let animate = function () {
+        
     drawsatkacikner();
     draw();
     requestAnimationFrame(animate);
-    
 }
 
+
+
+    constructAnts();
 $('#strtg').on('click', function (){
     animate();
     Backimg();
 });
 
-let counter = setInterval(UpdateTime, 500);
 let sTime = new Date().getTime();
-let countDown =30;
-let animation = setInterval(animate,1);
+var counter = setInterval(UpdateTime, 500);
+//let animation = setInterval(animate,1);
 
 function UpdateTime() {
-
     let cTime = new Date().getTime();
     let diff = cTime - sTime;
     let seconds = countDown - Math.floor(diff / 1000);
@@ -208,14 +228,17 @@ function UpdateTime() {
         seconds -= minutes * 60;
         $("#minutes").text(minutes < 10 ? "0" + minutes : minutes);
         $("#seconds").text(seconds < 10 ? "0" + seconds : seconds);
-    } else {
+    }
+     else {
        $("#countdown").hide();
-        clearInterval(counter);
+        gameOver() 
+       clearInterval(counter);
     }
 }
+UpdateTime();
 
-function gameOver(){
-
+function gameOver()
+{
   satkacikner=[];
   points=[];
   context.clearRect(0, 0, canvas.width, canvas.height);
@@ -224,20 +247,20 @@ function gameOver(){
   context.drawImage(gameOverImage, 350,100);
 
 }
-
-
-
-UpdateTime();
-
 function BackgroundSound(){
 
-   /* $('#on').on('click', function (){
+    /*$('#on').on('click', function (){
 
-        $(Audio).stop();
+        $(#audio).pause();
 
         
-    });*/
-    document.getElementById('audio').muted = true;
+    });
+    //document.getElementById('audio').muted = true;
 
+}*/
+$('#audio').each(function(){
+    this.pause(); // Stop playing
+    this.currentTime = 0; // Reset time
+});
 }
 
